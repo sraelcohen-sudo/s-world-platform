@@ -1,37 +1,48 @@
 import { Pool, type QueryResultRow } from "pg";
 
 declare global {
+  // eslint-disable-next-line no-var
   var __pgPool__: Pool | undefined;
 }
 
-function createPool(): Pool {
+function getConnectionString(): string {
   const connectionString = process.env.DATABASE_URL;
 
   if (!connectionString) {
-    throw new Error("Missing DATABASE_URL");
+    throw new Error("Missing DATABASE_URL environment variable");
   }
 
+  return connectionString;
+}
+
+function createPool(): Pool {
   return new Pool({
-    connectionString,
+    connectionString: getConnectionString(),
     ssl:
       process.env.NODE_ENV === "production"
         ? { rejectUnauthorized: false }
-        : false,
+        : false
   });
 }
 
-const globalPool = globalThis.__pgPool__;
+function getPool(): Pool {
+  if (globalThis.__pgPool__) {
+    return globalThis.__pgPool__;
+  }
 
-export const pool: Pool = globalPool ?? createPool();
+  const pool = createPool();
 
-if (process.env.NODE_ENV !== "production") {
-  globalThis.__pgPool__ = pool;
+  if (process.env.NODE_ENV !== "production") {
+    globalThis.__pgPool__ = pool;
+  }
+
+  return pool;
 }
 
 export async function query<T extends QueryResultRow = QueryResultRow>(
   text: string,
   params: unknown[] = []
 ): Promise<T[]> {
-  const result = await pool.query<T>(text, params);
+  const result = await getPool().query<T>(text, params);
   return result.rows;
 }
