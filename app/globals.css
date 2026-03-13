@@ -1,0 +1,139 @@
+:root {
+  --background: #f7f8fb;
+  --surface: #ffffff;
+  --foreground: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --max-width: 960px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+main {
+  width: 100%;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  padding: 2rem 0 1rem;
+}
+
+.hero h1 {
+  font-size: 2.25rem;
+  line-height: 1.1;
+  margin: 0 0 0.75rem;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 700px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border-radius: 999px;
+  padding: 0.8rem 1.1rem;
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.page-title {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+}
+
+.page-subtitle {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+
+.list-link {
+  display: block;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.list-link:hover {
+  transform: translateY(-1px);
+  border-color: #c7d2fe;
+}
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header__brand {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+  color: var(--muted);
+}
+
+.breadcrumbs {
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
