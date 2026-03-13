@@ -1,0 +1,51 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Route } from "next";
+import { getTopicById, getSubjectById } from "@/lib/mock-data";
+
+type PageProps = {
+  params: Promise<{
+    topicId: string;
+  }>;
+};
+
+export default async function TopicDetailPage({ params }: PageProps) {
+  const { topicId } = await params;
+  const topic = getTopicById(topicId);
+
+  if (!topic) {
+    notFound();
+  }
+
+  const subject = getSubjectById(topic.subjectId);
+
+  return (
+    <main>
+      <div className="container">
+        <div className="breadcrumbs">
+          {subject ? (
+            <Link href={`/subjects/${subject.id}` as Route}>
+              ← Back to {subject.name}
+            </Link>
+          ) : (
+            <Link href={"/subjects" as Route}>← Back to subjects</Link>
+          )}
+        </div>
+
+        <h1 className="page-title">{topic.name}</h1>
+        <p className="page-subtitle">
+          Topic detail page. The next phase can add subtopics and question
+          delivery here.
+        </p>
+
+        <div className="card">
+          <h2>Phase 2 status</h2>
+          <p className="muted">
+            API routes and data-layer utilities are now in place. This page is
+            ready for live database-backed content next.
+          </p>
+        </div>
+      </div>
+    </main>
+  );
+}
